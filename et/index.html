@@ -41,6 +41,8 @@
     .input-group label{display:block;font-size:14px;color:#4e5969;margin-bottom:6px}
     .row{display:flex;gap:8px}
     .row-2{display:flex;gap:8px}
+    .row-3{text-align:center}
+    .row-4{max-width:900px;display:flex;}
     .number-input {flex: 1;display: flex;align-items: center;border: 1px solid #dbdbdb;border-radius: 6px;position: relative; overflow: hidden;height:2.25rem;margin: 0 5px;background-color: #ffffff;}
     .number-input input {flex: 1;padding: 10px 12px;border: none;font-size: 14px;outline: none;width: calc(100% - 60px);}
     .btn-group {display: flex;flex-direction: column;border-left: 1px solid #ffffff;opacity: 0;transition: opacity 0.2s;width: 25px;}
@@ -107,8 +109,8 @@
     a{color: #333; text-decoration: none; transition: color 0.3s;}
     a:hover {color: #a81900;}
 </style>
-<div>
-<div>
+<div class="row-3">
+<div class="row-4">
 <div class="container">
     <div class="row"><svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calculator w-6 h-6" aria-hidden="true"><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg><h1>Minecraft 末地要塞定位计算器（两点式直线法）</h1></div><p class="text-muted-foreground">通过两次末影之眼投掷的玩家站位和落点坐标连成的直线，来计算要塞位置。</p><p class="text-muted-GGbeng">利用末影之眼指向机制，通过两次投掷坐标，以几何算法精准计算要塞位置，助你高效探索。适合末地较大、要塞分布较稀疏的情况。需要两次投掷，且两次投掷的起点距离越远，定位结果越准确。</p>
     <div class="input-group"><label>第一次 玩家站位 (x₁, z₁)<div class="help-icon-wrapper"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-question"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg><div class="help-bubble">这里填写你在Minecraft世界中第一次投掷末影之眼时所站的位置的X和Z坐标。</div></div></label><div class="row"><div class="number-input"><input id="x1" placeholder="x₁"><div class="btn-group"><button class="btn-up" onclick="adj('x1',1)">▲</button><button class="btn-down" onclick="adj('x1',-1)">▼</button></div></div><div class="number-input"><input id="z1" placeholder="z₁"><div class="btn-group"><button class="btn-up" onclick="adj('z1',1)">▲</button><button class="btn-down" onclick="adj('z1',-1)">▼</button></div></div></div></div>
@@ -134,7 +136,7 @@
 </div>
 &nbsp;&nbsp;&nbsp;
 <div class="container-4">
-        <h1>查找历史</h1><div id="history"></div>
+        <h1>查找历史</h1><div id="history">敬请期待</div>
 </div>
 </div>
 <br><div class="container-3"><div class="row"><img src="admin.png" alt="admin" style="width:60px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">&nbsp;&nbsp;<div><strong>本页面开发者:&nbsp;&nbsp;</strong>2025_XiaoTangcai<br><strong>本站职位:&nbsp;&nbsp;</strong>站长兼开发者</div>&nbsp;&nbsp;&nbsp;<div><strong>常驻服务器:&nbsp;&nbsp;</strong><a href="https://www.minecraftzw.com/44473.html" target="blank">2b2t.city</a><br><div><strong>开发者留言:&nbsp;&nbsp;</strong>我永远坚信“力大砖飞”</div></div>&nbsp;&nbsp;&nbsp;<strong>开发者主页:&nbsp;&nbsp;</strong><a href="https://center.mcmod.cn/1180626/" target="blank">mcmod.cn</a></div>

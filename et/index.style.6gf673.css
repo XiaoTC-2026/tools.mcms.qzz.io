@@ -42,7 +42,7 @@ h1{font-size:20px;font-weight:600;color:#161616;margin-bottom:20px;text-align:ce
 .confidence{display:flex;gap:24px;}
 .tp-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;padding:10px;background:#fff;border-radius:6px;border:1px solid #eee;}
 .tp-box{flex:1;font-family:monospace;font-size:14px;}
-.copy-btn{padding:6px 10px;background:#000;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:12px;}
+.copy-btn{padding:6px 10px;background:#000;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:13px;}
 .sr-only {position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0, 0, 0, 0);white-space: nowrap;border: 0;}
 .help-container p {margin-bottom: 10px;color: #333;font-size: 14px;}
 .help-icon-wrapper {position: relative;display: inline-block;cursor: help;}

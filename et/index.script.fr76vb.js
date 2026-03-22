@@ -67,35 +67,104 @@ function adj(id, d){
     const i=document.getElementById(id);
     i.value=(parseFloat(i.value)||0)+d;
 }
-function calc() {const errorElement = document.getElementById('My-Name-Is-Error');errorElement.textContent = '无错误';errorElement.parentElement.classList.remove('show');const getNum = (id) => {const val = document.getElementById(id)?.value || '';const num = parseFloat(val);return isNaN(num) ? 0 : num;};const x1 = getNum('x1');const z1 = getNum('z1');const x2 = getNum('x2');const z2 = getNum('z2');const x3 = getNum('x3');const z3 = getNum('z3');const x4 = getNum('x4');const z4 = getNum('z4');
+function calc() {
+    // 1. 获取报错显示元素并初始化
+    const errorElement = document.getElementById('My-Name-Is-Error');
+    errorElement.textContent = '无错误';
+    errorElement.parentElement.classList.remove('show');
+
+    // 2. 读取并校验输入值
+    const getNum = (id) => {
+        const val = document.getElementById(id)?.value || '';
+        const num = parseFloat(val);
+        return isNaN(num) ? 0 : num;
+    };
+
+    const x1 = getNum('x1');
+    const z1 = getNum('z1');
+    const x2 = getNum('x2');
+    const z2 = getNum('z2');
+    const x3 = getNum('x3');
+    const z3 = getNum('z3');
+    const x4 = getNum('x4');
+    const z4 = getNum('z4');
+
+    // 初始化默认结果（兜底值，出错时用）
     let rx = 'NaN', rz = 'NaN', cmd = '/tp @s ~ ~ ~';
     let toFortDist = 'NaN', dir = '未知', confText = '未知';
-    try {let k1, b1, k2, b2, x, z;
-        if (x2 - x1 === 0) {throw new Error('第一组采样点的X坐标不能相同！');}
-        k1 = (z2 - z1) / (x2 - x1);b1 = z1 - k1 * x1;
-        if (x4 - x3 === 0) {throw new Error('第二组采样点的X坐标不能相同！');}
-        k2 = (z4 - z3) / (x4 - x3);b2 = z3 - k2 * x3;
-        if (k1 === k2) {throw new Error('两条直线平行，无法计算交点！请更换采样点。');}
-        x = (b2 - b1) / (k1 - k2);z = k1 * x + b1;
-        if (isNaN(x) || isNaN(z) || !isFinite(x) || !isFinite(z)) {throw new Error('坐标计算异常，请检查输入的采样点！');}
+
+    try {
+        // 3. 计算直线参数（保留原有校验，但不抛出后终止，而是赋值兜底值）
+        let k1, b1, k2, b2, x, z;
+        // 处理除数为0的情况：赋值兜底值
+        if (x2 - x1 === 0) {
+            throw new Error('第一组采样点的X坐标不能相同！');
+        }
+        k1 = (z2 - z1) / (x2 - x1);
+        b1 = z1 - k1 * x1;
+
+        if (x4 - x3 === 0) {
+            throw new Error('第二组采样点的X坐标不能相同！');
+        }
+        k2 = (z4 - z3) / (x4 - x3);
+        b2 = z3 - k2 * x3;
+
+        if (k1 === k2) {
+            throw new Error('两条直线平行，无法计算交点！请更换采样点。');
+        }
+        x = (b2 - b1) / (k1 - k2);
+        z = k1 * x + b1;
+
+        // 校验计算结果，无效则赋值兜底值
+        if (isNaN(x) || isNaN(z) || !isFinite(x) || !isFinite(z)) {
+            throw new Error('坐标计算异常，请检查输入的采样点！');
+        }
+
+        // 4. 计算可信度、距离、方向（正常逻辑）
         const startDist = Math.hypot(x3 - x1, z3 - z1);
         confText = startDist < 100 ? '低' : (startDist < 300 ? '中' : '高');
+        
         toFortDist = Math.hypot(x - x1, z - z1);
-        const dx = x - x1;const dz = z - z1;
-        const absDx = Math.abs(dx);const absDz = Math.abs(dz);
+        const dx = x - x1;
+        const dz = z - z1;
+        const absDx = Math.abs(dx);
+        const absDz = Math.abs(dz);
+
         if (!Number.isNaN(dx) && !Number.isNaN(dz)) {
-            if (absDx < 0.001 && absDz < 0.001) {dir = "当前位置";} else {dir = absDx > absDz ? (dx > 0 ? (dz > 0 ? "东南" : "东北") : (dz > 0 ? "西南" : "西北")) : (dz > 0 ? (dx > 0 ? "东南" : "西南") : (dx > 0 ? "东北" : "西北"));}
+            if (absDx < 0.001 && absDz < 0.001) {
+                dir = "当前位置";
+            } else {
+                dir = absDx > absDz 
+                    ? (dx > 0 ? (dz > 0 ? "东南" : "东北") : (dz > 0 ? "西南" : "西北"))
+                    : (dz > 0 ? (dx > 0 ? "东南" : "西南") : (dx > 0 ? "东北" : "西北"));
+            }
         }
-        rx = Math.round(x);rz = Math.round(z);
+
+        // 正常计算结果
+        rx = Math.round(x);
+        rz = Math.round(z);
         cmd = `/tp @s ${Number.isNaN(rx) ? '~' : rx} ~ ${Number.isNaN(rz) ? '~' : rz}`;
         toFortDist = Math.round(toFortDist);
+
     } catch (error) {
+        // 捕获错误，仅显示错误信息，不终止结果渲染
         errorElement.textContent = error.message;
         errorElement.parentElement.classList.add('show');
     }
+
+    // ========== 核心修改：计算完成后（无论成败）统一显示结果框 ==========
     const resultCard = document.getElementById('resultCard');
-    if (resultCard) {resultCard.style.display = 'block';document.getElementById('tpCmd').textContent = cmd;document.getElementById('outX').textContent = rx;document.getElementById('outZ').textContent = rz;document.getElementById('distRow').textContent = `${toFortDist} blocks`;document.getElementById('dir').textContent = dir;document.getElementById('conf').textContent = confText;
-}}
+    if (resultCard) {
+        resultCard.style.display = 'block';
+        // 渲染结果（出错时显示兜底值：NaN/未知 等）
+        document.getElementById('tpCmd').textContent = cmd;
+        document.getElementById('outX').textContent = rx;
+        document.getElementById('outZ').textContent = rz;
+        document.getElementById('distRow').textContent = `${toFortDist} blocks`;
+        document.getElementById('dir').textContent = dir;
+        document.getElementById('conf').textContent = confText;
+    }
+}
 
 function resetAll(){
     document.querySelectorAll('input').forEach(e=>e.value='')

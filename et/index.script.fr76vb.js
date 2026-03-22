@@ -59,8 +59,14 @@ const developerReplies = [
     "你是选择医术，还是......道德？",
     "光阴似箭，一些事随着那些被修复的bug消逝了",
 ];
-function getRandomReply() {const randomIndex = Math.floor(Math.random() * developerReplies.length);return developerReplies[randomIndex];}
-function adj(id, d){const i=document.getElementById(id);i.value=(parseFloat(i.value)||0)+d;}
+function getRandomReply() {
+    const randomIndex = Math.floor(Math.random() * developerReplies.length);
+    return developerReplies[randomIndex];
+}
+function adj(id, d){
+    const i=document.getElementById(id);
+    i.value=(parseFloat(i.value)||0)+d;
+}
 function calc(){
     const x1=+document.getElementById('x1').value||0
     const z1=+document.getElementById('z1').value||0
@@ -131,5 +137,10 @@ if (absDx > absDz) {
     document.getElementById('conf').textContent=confText
     document.getElementById('the-reply-from-the-developer-of-the-mcms.qzz.io-website').textContent = getRandomReply();
 }
-function resetAll(){document.querySelectorAll('input').forEach(e=>e.value='')document.getElementById('resultCard').style.display='none'// document.getElementById('the-reply-from-the-developer-of-the-mcms.qzz.io-website').textContent = '';}
+
+function resetAll(){
+    document.querySelectorAll('input').forEach(e=>e.value='')
+    document.getElementById('resultCard').style.display='none'
+    // document.getElementById('the-reply-from-the-developer-of-the-mcms.qzz.io-website').textContent = '';
+}
 /* 末影之眼今天心情不好，或者你的运气值需要充值了。请保持微笑，按下 F5，让“特性”再次降临，不是源代码的问题哦 */
